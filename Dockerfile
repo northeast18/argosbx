@@ -12,8 +12,8 @@ COPY . .
 # 授权
 RUN chmod +x *.sh
 
-# 暴露端口（虽然 Koyeb 有设置，但这里声明一下更稳）
+# 暴露端口
 EXPOSE 8080
 
-# 修改启动命令：运行脚本，并在后面加一个“永不退出”的进程
-CMD bash argosbx.sh && tail -f /dev/null
+# 这里的逻辑：先执行 env 将变量打印出来（方便排查），再运行脚本
+CMD ["/bin/bash", "-c", "export $(strings /proc/1/environ | grep '='); bash argosbx.sh"]
