@@ -2,15 +2,15 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]  # 当 main 分支有变动时触发
-  workflow_dispatch:      # 允许手动触发
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      packages: write  # 明确授予写入包的权限
 
     steps:
       - name: Checkout repository
@@ -28,4 +28,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/argosbx:latest
+          # 这里手动写死你的镜像名（全部小写），替换下面的 '你的用户名'
+          tags: ghcr.io/northeast18/argosbx:latest
